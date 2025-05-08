@@ -1,5 +1,8 @@
 <template>
   <view>
+    <!-- 搜索组件 -->
+    <my-search @click="gotoSearch"></my-search>
+
     <view class="scroll-view-container">
       <!-- 左侧滑动区 -->
       <scroll-view class='left-scroll-views' scroll-y='true' :style="{height:wh+'px'}">
@@ -36,13 +39,13 @@
         active: 0,
         //二级分类
         cateLevel2: [],
-        scrollTop:0
+        scrollTop: 0
       };
     },
 
     onLoad() {
       const sysInfo = uni.getSystemInfoSync()
-      this.wh = sysInfo.windowHeight
+      this.wh = sysInfo.windowHeight - 50
       this.getCateList()
     },
 
@@ -61,15 +64,20 @@
         this.active = i
 
         this.cateLevel2 = this.cateList[i].children
-        
+
         this.scrollTop = this.scrollTop === 0 ? 1 : 0
       },
       //跳转
-      gotoGoodsList(item){
+      gotoGoodsList(item) {
         uni.navigateTo({
-          url:'/subpkg/goods_list/goods_list?cid=' +item.cat_id 
+          url: '/subpkg/goods_list/goods_list?cid=' + item.cat_id
         })
-      }
+      },
+      gotoSearch() {
+        uni.navigateTo({
+          url: '/subpkg/search/search'
+        })
+      },
     }
   }
 </script>
