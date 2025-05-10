@@ -27,27 +27,28 @@
   "subPackages": [{
     "root": "subpkg",
     "pages": [{
-      "path": "goods_detail/goods_detail",
-      "style": {
-        "navigationBarTitleText": ""
-      }
-    },
-    {
-      "path" : "goods_list/goods_list",
-      "style" : 
+        "path": "goods_detail/goods_detail",
+        "style": {
+          "navigationBarTitleText": ""
+        }
+      },
       {
-        "navigationBarTitleText" : ""
-      }
-    },
-    {
-      "path" : "search/search",
-      "style" : 
+        "path": "goods_list/goods_list",
+        "style": {
+          "navigationBarTitleText": "",
+          "onReachBottomDistance": 150,
+          "enablePullDownRefresh": true,
+          "backgroundColor": "#f8f8f8"
+        }
+      },
       {
-        "navigationBarTitleText" : ""
+        "path": "search/search",
+        "style": {
+          "navigationBarTitleText": ""
+        }
       }
-    }]
+    ]
   }],
-
   "globalStyle": {
     "navigationBarTextStyle": "white",
     "navigationBarTitleText": "黑马优购",

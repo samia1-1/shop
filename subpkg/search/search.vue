@@ -126,7 +126,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      font-size: 12px;
+      font-size:13px;
       padding: 13px 0;
       border-bottom: 1px solid #efefef;
 
