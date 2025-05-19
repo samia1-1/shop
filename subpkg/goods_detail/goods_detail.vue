@@ -25,14 +25,42 @@
     <rich-text :nodes="goods_info.goods_introduce"></rich-text>
     <!-- 商品导航 -->
     <view class="goods_nav">
-      <uni-goods-nav :fill="true" :option="option" :button-group="buttonGroup" @click="onClick"
-        @buttonClick=""></uni-goods-nav>
+      <uni-goods-nav :fill="true" :options="options" :button-group="buttonGroup" @click="onClick"
+        @buttonClick="buttonClick"></uni-goods-nav>
     </view>
   </view>
 </template>
 
 <script>
+  import {
+    mapState,
+    mapMutations,
+    mapGetters,
+  } from 'vuex'
+
   export default {
+    computed: {
+      ...mapState('m_cart', ['cart']),
+      ...mapGetters('m_cart', ['total']),
+    },
+    watch: {
+      // total(newVal) {
+      //   const findResult = this.options.find(x => x.text === '购物车')
+      //   if (findResult) {
+      //     findResult.info = newVal
+      //   }
+      // }
+      total: {
+        handler(newVal) {
+          const findResult = this.options.find(x => x.text === '购物车')
+          if (findResult) {
+            findResult.info = newVal
+          }
+        },
+        immediate: true,
+      }
+    },
+
     data() {
       return {
         goods_info: {},
@@ -45,7 +73,7 @@
           {
             icon: "cart",
             text: "购物车",
-            info: 2,
+            info: 0,
           }
         ],
         buttonGroup: [{
@@ -62,11 +90,13 @@
       };
     },
     onLoad(options) {
-      const goods_id = options.goods_id
+      // console.log(options)
+      const goods_id = options.id
       this.getGoodsDetail(goods_id)
     },
 
     methods: {
+      ...mapMutations('m_cart', ['addToCart']),
       //获取信息
       async getGoodsDetail(goods_id) {
         const {
@@ -91,10 +121,23 @@
       onClick(e) {
         if (e.content.text === '购物车') {
           uni.switchTab({
-            url:'/pages/cart/cart'
+            url: '/pages/cart/cart'
           })
         }
       },
+      buttonClick(e) {
+        if (e.content.text === '加入购物车') {
+          const goods = {
+            goods_id: this.goods_info.goods_id,
+            goods_name: this.goods_info.goods_name,
+            goods_price: this.goods_info.goods_price,
+            goods_count: 1,
+            goods_small_logo: this.goods_info.goods_small_logo,
+            goods_state: true,
+          }
+          this.addToCart(goods)
+        }
+      }
     }
   }
 </script>
