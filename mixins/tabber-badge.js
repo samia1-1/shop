@@ -5,6 +5,13 @@ export default {
   computed: {
     ...mapGetters('m_cart', ['total']),
   },
+  watch: {
+    total() {
+      // 监听total变化时，重新设置角标
+      this.setBadge()
+    }
+  },
+  // 页面被打开时触发
   onShow() {
     this.setBadge()
   },

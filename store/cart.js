@@ -28,6 +28,7 @@ export default {
         this.commit('m_cart/saveToStorage')
       }
     },
+    // 更新购物车商品的数量
     updateGoodsCount(state, goods) {
       const findResult = state.cart.find(x => x.goods_id === goods.goods_id)
 
@@ -44,16 +45,30 @@ export default {
         state.cart.splice(state.cart.indexOf(findResult), 1)
         this.commit('m_cart/saveToStorage')
       }
+    },
+    
+    // 批量更新购物车商品的选中状态
+    updateAllGoodsState(state,newState){
+      state.cart.forEach(x=>x.goods_state = newState)
+      
+      this.commit('m_cart/saveToStorage')
     }
   },
 
   getters: {
+    // 购物车商品的总数量
     total(state) {
       return state.cart.reduce((total, item) => total += item.goods_count, 0)
     },
+    // 购物车商品的总价格
     checkedCount(state) {
       return state.cart.filter(x => x.goods_state).reduce((total, item) =>
         total += item.goods_count, 0)
+    },
+    // 已勾选购物车商品的总金额
+    checkedGoodsAmount(state){
+      return state.cart.filter(x => x.goods_state).reduce((total, item) =>
+        total += item.goods_count * item.goods_price, 0).toFixed(2)
     }
   }
 }
