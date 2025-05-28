@@ -15,7 +15,15 @@ $http.baseUrl = 'https://api-hmugo-web.itheima.net'
 $http.beforeRequest = function(options) {
   uni.showLoading({
     title: '数据加载中...',
-  })
+  });
+
+  // 判断请求的类型
+  if (options.url.indexOf('/my/') !== -1) {
+    // 如果是以/my/开头的请求，则需要携带token
+    options.header = {
+      Authorization: store.state.m_user.token || ''
+    };
+  }
 };
 
 $http.afterRequest = function() {
